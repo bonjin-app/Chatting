@@ -15,7 +15,7 @@ public class ChatRoom extends BaseEntity {
     // 순번
     @Id
     @Column(name = "chat_room_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Oracle 사용시 Sequence 로 바꾸기
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // Room ID

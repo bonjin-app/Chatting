@@ -1,6 +1,8 @@
 package kr.co.bonjin.chatting.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.*;
 
@@ -16,8 +18,11 @@ import org.springframework.web.socket.config.annotation.*;
  * 채팅방에서 메시지를 보내고 받는다 – 해당 Topic 으로 메시지를 발송하거나(pub) 메시지를 받는다(sub)
  */
 @Configuration
+@RequiredArgsConstructor
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
+    private final StompHandler stompHandler;
 
     /**
      * pub/sub 메시징을 구현
@@ -44,6 +49,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws-stomp")
+//                .setAllowedOrigins("*")
                 .withSockJS();
+    }
+
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(stompHandler);
     }
 }
