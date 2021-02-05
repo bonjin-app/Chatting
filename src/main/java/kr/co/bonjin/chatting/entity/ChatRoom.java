@@ -1,10 +1,27 @@
-package kr.co.bonjin.chatting.dto;
+package kr.co.bonjin.chatting.entity;
 
 
+import kr.co.bonjin.chatting.entity.common.BaseEntity;
+import lombok.Getter;
+
+import javax.persistence.*;
 import java.util.UUID;
 
-public class ChatRoom {
+@Getter
+@Entity
+@Table(name = "chat_room")
+public class ChatRoom extends BaseEntity {
+
+    // 순번
+    @Id
+    @Column(name = "chat_room_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Oracle 사용시 Sequence 로 바꾸기
+    private Long id;
+
+    // Room ID
+    @Column(name = "room_id")
     private String roomId;
+
     private String name;
 
     public ChatRoom() {}

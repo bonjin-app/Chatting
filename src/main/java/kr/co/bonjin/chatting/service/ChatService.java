@@ -1,52 +1,22 @@
 package kr.co.bonjin.chatting.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.co.bonjin.chatting.dto.ChatRoom;
+import kr.co.bonjin.chatting.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.util.*;
 
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 @Service
 public class ChatService {
 
-    private final ObjectMapper objectMapper;
-    private Map<String, ChatRoom> chatRooms;
+    private final ChatRepository chatRepository;
 
     @PostConstruct
     private void init() {
-        chatRooms = new LinkedHashMap<>();
-    }
-
-    public Collection<ChatRoom> findAllRoom() {
-        return chatRooms.values();
-    }
-
-    public ChatRoom findRoomById(String roomId) {
-        return chatRooms.get(roomId);
-    }
-
-    public ChatRoom createRoom(String name) {
-        String randomId = UUID.randomUUID().toString();
-        ChatRoom chatRoom = new ChatRoom();
-        chatRoom.setRoomId(randomId);
-        chatRoom.setName(name);
-        chatRooms.put(randomId, chatRoom);
-        return chatRoom;
-    }
-
-    public <T> void sendMessage(WebSocketSession session, T message) {
-        try {
-            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        }
     }
 }

@@ -1,35 +1,39 @@
 package kr.co.bonjin.chatting.repository;
 
-import kr.co.bonjin.chatting.dto.ChatRoom;
+import kr.co.bonjin.chatting.entity.ChatRoom;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.*;
 
 @Repository
 public class ChatRoomRepository {
 
-    private Map<String, ChatRoom> chatRoomMap;
+    @PersistenceContext
+    private EntityManager em;
 
     @PostConstruct
     private void init() {
-        chatRoomMap = new LinkedHashMap<>();
+
     }
 
-    public List<ChatRoom> findAllRoom() {
-        // 채팅방 생성순서 최근 순으로 반환
-        List chatRooms = new ArrayList<>(chatRoomMap.values());
-        Collections.reverse(chatRooms);
-        return chatRooms;
+    public List<ChatRoom> findAll() {
+        List<ChatRoom> rooms = em.createQuery("select cr from ChatRoom cr order by cr.id desc", ChatRoom.class)
+                .getResultList();
+        return rooms;
     }
 
-    public ChatRoom findRoomById(String id) {
-        return chatRoomMap.get(id);
+    public ChatRoom findById(String roomId) {
+        ChatRoom room = em.createQuery("select cr from ChatRoom cr where cr.roomId = :roomId", ChatRoom.class)
+                .setParameter("roomId", roomId)
+                .getSingleResult();
+        return room;
     }
 
-    public ChatRoom createChatRoom(String name) {
-        ChatRoom chatRoom = ChatRoom.create(name);
-        chatRoomMap.put(chatRoom.getRoomId(), chatRoom);
-        return chatRoom;
+    public Long save(ChatRoom chatRoom) {
+        em.persist(chatRoom);
+        return chatRoom.getId();
     }
 }
