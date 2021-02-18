@@ -22,15 +22,6 @@ spring:
     cache: false
 
   # ===============================
-  # = DATA SOURCE (MARIADB)
-  # ===============================
-  datasource:
-    # 기본 DB
-    url: jdbc:mariadb://gigas.synology.me:3306/chatting
-    username: bonjin
-    password: Cthqkqh88!
-
-  # ===============================
   # = JPA / HIBERNATE
   # ===============================
   # SQL 문장의 로깅 활성화
