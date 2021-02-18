@@ -1,6 +1,7 @@
 package kr.co.bonjin.chatting.entity;
 
 import kr.co.bonjin.chatting.entity.common.BaseEntity;
+import kr.co.bonjin.chatting.model.MessageType;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -24,13 +25,9 @@ public class ChatMessage extends BaseEntity {
     private String roomId;  // 방번호
 
     private String sender;  // 메시지 보낸 사람
+
     private String message; // 메시지
 
-
-    // 메시지 타입 : 입장, 채팅
-    public enum MessageType {
-        JOIN, TALK
-    }
 
     public ChatMessage() {}
 

@@ -62,25 +62,31 @@
         },
         methods: {
             findRoom: function() {
-                axios.get('/chat/room/'+this.roomId).then(response => { this.room = response.data; });
+                axios.get('/chat/room/'+this.roomId).then(response => {
+                    this.room = response.data;
+                });
             },
             sendMessage: function() {
 
                 if ("" !== this.message && null != this.message) {
-                    ws.send("/pub/chat/message", {}, JSON.stringify({type:'TALK',
+                    ws.send("/pub/chat/message", {}, JSON.stringify({
+                        type:'TALK',
                         roomId:this.roomId,
                         sender:this.sender,
-                        message:this.message}));
+                        message:this.message
+                    }));
                     this.message = '';
                 }
             },
             recvMessage: function(recv) {
                 this.messages.unshift({"type":recv.type,
-                    "sender":recv.type=='ENTER'?'[알림]':recv.sender,
-                    "message":recv.message})
+                    "sender":recv.type=='JOIN'?'[알림]': recv.sender,
+                    "message":recv.message
+                })
             }
         }
     });
+
     // pub/sub event
     ws.connect({}, function(frame) {
         ws.subscribe("/sub/chat/room/"+vm.$data.roomId, function(message) {

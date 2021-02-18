@@ -47,13 +47,13 @@
             chatrooms: [
             ]
         },
-        created() {
+        created: function() {
             this.findAllRoom();
         },
         methods: {
             findAllRoom: function() {
                 axios.get('/chat/rooms').then(response => {
-                    console.log(response.data)
+                    console.log(response.data);
                     this.chatrooms = response.data;
             });
             },
@@ -79,7 +79,7 @@
                 if ("" !== sender && null != sender) {
                     localStorage.setItem('wschat.sender',sender);
                     localStorage.setItem('wschat.roomId',roomId);
-                    location.href="/chat/room/enter/"+roomId;
+                    location.href="/chat/room/join/"+roomId;
                 }
             }
         }
