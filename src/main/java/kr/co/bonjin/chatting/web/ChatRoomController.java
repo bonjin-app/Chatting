@@ -1,12 +1,8 @@
 package kr.co.bonjin.chatting.web;
 
 import kr.co.bonjin.chatting.entity.ChatRoom;
-import kr.co.bonjin.chatting.entity.User;
-import kr.co.bonjin.chatting.provider.JwtTokenProvider;
 import kr.co.bonjin.chatting.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +14,6 @@ import java.util.Collection;
 @RequestMapping(value = "/chat")
 public class ChatRoomController {
 
-    private final JwtTokenProvider jwtTokenProvider;
     private final ChatRoomService chatRoomService;
 
     // 채팅 리스트 화면
@@ -55,11 +50,4 @@ public class ChatRoomController {
         return chatRoomService.findRoomById(roomId);
     }
 
-    @GetMapping("/user")
-    @ResponseBody
-    public User getUserInfo() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        return new User(name, jwtTokenProvider.generateToken(name));
-    }
 }

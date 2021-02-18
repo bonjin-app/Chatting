@@ -2,12 +2,10 @@ package kr.co.bonjin.chatting.entity;
 
 import kr.co.bonjin.chatting.entity.common.BaseEntity;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "chat_message")
 public class ChatMessage extends BaseEntity {
@@ -15,7 +13,7 @@ public class ChatMessage extends BaseEntity {
     // 순번
     @Id
     @Column(name = "chat_message_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Oracle 사용시 Sequence 로 바꾸기
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -31,8 +29,12 @@ public class ChatMessage extends BaseEntity {
 
     // 메시지 타입 : 입장, 채팅
     public enum MessageType {
-        ENTER, TALK
+        JOIN, TALK
     }
 
     public ChatMessage() {}
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

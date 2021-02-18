@@ -29,12 +29,6 @@ dependencies {
     // Maria DB
     implementation "org.mariadb.jdbc:mariadb-java-client"
 
-    // Security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-
-    // JWT JSON Web Token - 공개 표준 (RFC 7519)
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
-
     // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

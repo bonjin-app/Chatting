@@ -59,6 +59,3 @@ spring:
 
         # SQL 언어 MariaDB
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-
-  jwt:
-    secret: geniuschoi@

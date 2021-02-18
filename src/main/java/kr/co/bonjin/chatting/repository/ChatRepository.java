@@ -1,7 +1,6 @@
 package kr.co.bonjin.chatting.repository;
 
 import kr.co.bonjin.chatting.entity.ChatMessage;
-import kr.co.bonjin.chatting.entity.ChatRoom;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
